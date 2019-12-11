@@ -1,0 +1,39 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.maru.settings">
+
+    <application
+        android:label="@string/desktop_dashboard_title"
+        android:icon="@drawable/ic_desktop_display"
+        android:taskAffinity=""
+        android:hardwareAccelerated="true"
+        android:requiredForAllUsers="true"
+        android:supportsRtl="true"
+        android:allowBackup="false"
+        android:usesCleartextTraffic="true"
+        android:defaultToDeviceProtectedStorage="true">
+
+        <activity
+            android:name=".MaruSettings$DesktopDashboardActivity"
+            android:enabled="false"
+            android:icon="@drawable/ic_desktop_display"
+            android:label="@string/desktop_dashboard_title"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.settings.action.EXTRA_SETTINGS" />
+            </intent-filter>
+
+            <meta-data
+                android:name="com.android.settings.FRAGMENT_CLASS"
+                android:value="com.maru.settings.desktop.DesktopDashboardFragment" />
+            <meta-data
+                android:name="com.android.settings.category"
+                android:value="com.android.settings.category.maru.desktop" />
+            <meta-data
+                android:name="com.android.settings.title"
+                android:value="@string/desktop_dashboard_title" />
+            <meta-data
+                android:name="com.android.settings.summary"
+                android:value="@string/desktop_dashboard_summary" />
+        </activity>
+    </application>
+</manifest>
