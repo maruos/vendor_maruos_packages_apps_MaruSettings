@@ -8,6 +8,7 @@
 
     <style name="Theme.Settings" parent="Theme.SettingsBase">
         <item name="preferenceTheme">@style/PreferenceTheme</item>
+        <item name="switchBarTheme">@style/ThemeOverlay.SwitchBar.Settings</item>
     </style>
 
     <style name="ThemeOverlay.SwitchBar.Settings" parent="@android:style/ThemeOverlay.Material.ActionBar">
