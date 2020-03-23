@@ -26,7 +26,7 @@
                 android:value="com.maru.settings.desktop.DesktopDashboardFragment" />
             <meta-data
                 android:name="com.android.settings.category"
-                android:value="com.android.settings.category.maru.desktop" />
+                android:value="com.android.settings.category.ia.homepage" />
             <meta-data
                 android:name="com.android.settings.title"
                 android:value="@string/desktop_dashboard_title" />
