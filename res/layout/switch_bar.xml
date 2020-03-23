@@ -24,7 +24,7 @@
         android:layout_marginEnd="@dimen/restricted_icon_margin_end"
         android:visibility="gone" />
 
-    <com.android.settings.widget.ToggleSwitch
+    <com.maru.settings.widget.ToggleSwitch
         android:id="@+id/switch_widget"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

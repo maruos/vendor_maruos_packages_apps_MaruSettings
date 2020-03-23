@@ -41,3 +41,5 @@
     public static ** SEARCH_INDEX_DATA_PROVIDER;
     public static ** SUMMARY_PROVIDER_FACTORY;
 }
+
+-keep public class com.maru.settings.** extends android.app.Fragment

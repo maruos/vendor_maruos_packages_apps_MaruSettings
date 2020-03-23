@@ -11,6 +11,7 @@
         android:label="@string/desktop_dashboard_title"
         android:icon="@drawable/ic_desktop_display"
         android:taskAffinity=""
+        android:theme="@style/Theme.Settings"
         android:hardwareAccelerated="true"
         android:requiredForAllUsers="true"
         android:supportsRtl="true"
