@@ -28,7 +28,8 @@ public class ToggleSwitch extends Switch {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    public void setOnBeforeCheckedChangeListener(ToggleSwitch.OnBeforeCheckedChangeListener listener) {
+    public void setOnBeforeCheckedChangeListener(
+            ToggleSwitch.OnBeforeCheckedChangeListener listener) {
         mOnBeforeListener = listener;
     }
 

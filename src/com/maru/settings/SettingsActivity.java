@@ -50,7 +50,6 @@ public class SettingsActivity extends SettingsDrawerActivity {
             mFragmentClass = ai.metaData.getString(META_DATA_KEY_FRAGMENT_CLASS);
             mTitle = ai.metaData.getString(META_DATA_KEY_TITLE);
         } catch (PackageManager.NameNotFoundException nnfe) {
-            // No recovery
             Log.d(TAG, "Cannot get Metadata for: " + getComponentName().toString());
         }
     }

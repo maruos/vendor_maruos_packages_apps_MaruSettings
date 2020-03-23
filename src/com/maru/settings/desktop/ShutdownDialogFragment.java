@@ -43,11 +43,13 @@ public class ShutdownDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.desktop_shutdown_dialog_title)
                 .setMessage(R.string.desktop_shutdown_dialog_details)
-                .setNegativeButton(R.string.desktop_shutdown_dialog_negative_action,
+                .setNegativeButton(
+                        R.string.desktop_shutdown_dialog_negative_action,
                         (dialogInterface, i)
                                 -> listener.onShutdownCancel(ShutdownDialogFragment.this)
                 )
-                .setPositiveButton(R.string.desktop_shutdown_dialog_positive_action,
+                .setPositiveButton(
+                        R.string.desktop_shutdown_dialog_positive_action,
                         (dialogInterface, i) -> listener.onShutdown(ShutdownDialogFragment.this)
                 );
         return builder.create();

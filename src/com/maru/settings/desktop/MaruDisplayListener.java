@@ -31,7 +31,6 @@ import java.util.Set;
  * i.e. all public presentation displays.
  */
 public class MaruDisplayListener implements DisplayManager.DisplayListener {
-    private static final String TAG = MaruDisplayListener.class.getName();
     private final Context mContext;
     private final DisplayManager mDisplayManager;
     private Set<Integer> mMirrorableDisplays;
@@ -90,9 +89,5 @@ public class MaruDisplayListener implements DisplayManager.DisplayListener {
 
     public void setDisplayCallback(MaruDisplayCallback callback) {
         mCallback = callback;
-    }
-
-    public void removeDisplayCallback() {
-        mCallback = null;
     }
 }
