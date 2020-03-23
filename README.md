@@ -46,3 +46,30 @@ shared uid.
 ## View
 
 We copy `SwitchBar` and `ToggleButton` from the `Settings`, and use it to our app.
+
+## How to use
+
+Create directory `apps` in `vendor/maruos`, and add a `Android.mk` with following content:
+
+```Makefile
+LOCAL_PATH := $(call my-dir)
+
+include $(call all-makefiles-under, $(LOCAL_PATH))
+```
+
+Then use below command to clone project to `vendor/maruos/apps`:
+
+```shell
+git clone https://github.com/utzcoz/vendor_maruos_packages_apps_MaruSettings.git MaruSettings
+```
+
+The next thing we should do is to add `MaruSettings` to `vendor/maruos/device-maru.mk` 
+`PRODUCT_PACKAGES`:
+
+```Makefile
+PRODUCT_PACKAGES += \
+    MaruSettings
+```
+
+And last, we just need to build the system, and flash the images to the device. We can see 
+another `Desktop` entry on `Settings` dashboard homepage.
