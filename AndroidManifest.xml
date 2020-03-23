@@ -14,7 +14,6 @@
 
         <activity
             android:name=".MaruSettings$DesktopDashboardActivity"
-            android:enabled="false"
             android:icon="@drawable/ic_desktop_display"
             android:label="@string/desktop_dashboard_title"
             android:exported="true">
