@@ -63,10 +63,6 @@ public class DesktopDashboardFragment extends ObservablePreferenceFragment
     private boolean mShutdownConfirmed = false;
     private boolean mOverrideShutdownDialog = false;
 
-    public DesktopDashboardFragment() {
-        // Do nothing
-    }
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
