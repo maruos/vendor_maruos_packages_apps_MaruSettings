@@ -8,6 +8,7 @@ LOCAL_CERTIFICATE := platform
 LOCAL_PRIVILEGED_MODULE := true
 LOCAL_MODULE_TAGS := optional
 LOCAL_USE_AAPT2 := true
+LOCAL_PRIVATE_PLATFORM_APIS := true
 
 LOCAL_SRC_FILES := $(call all-java-files-under, src)
 LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
@@ -19,15 +20,6 @@ ifneq ($(INCREMENTAL_BUILDS),)
     LOCAL_JACK_ENABLED := incremental
     LOCAL_JACK_FLAGS := --multi-dex native
 endif
-
-LOCAL_STATIC_ANDROID_LIBRARIES := \
-    android-support-v4 \
-    android-support-v13 \
-    android-support-v7-appcompat \
-    android-support-v7-cardview \
-    android-support-v7-preference \
-    android-support-v7-recyclerview \
-    android-support-v14-preference
 
 include frameworks/base/packages/SettingsLib/common.mk
 
