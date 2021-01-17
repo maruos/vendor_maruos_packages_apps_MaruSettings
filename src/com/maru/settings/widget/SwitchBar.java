@@ -140,9 +140,6 @@ public class SwitchBar extends LinearLayout implements CompoundButton.OnCheckedC
     }
 
     public void setEnabled(boolean enabled) {
-        if (enabled) {
-            return;
-        }
         super.setEnabled(enabled);
         mTextView.setEnabled(enabled);
         mSwitch.setEnabled(enabled);
