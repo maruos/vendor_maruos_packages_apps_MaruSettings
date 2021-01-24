@@ -39,7 +39,7 @@ public class DesktopDashboardFragment extends ObservablePreferenceFragment
         ToggleSwitch.OnBeforeCheckedChangeListener,
         ShutdownDialogFragment.ShutdownDialogListener {
 
-    private static final String TAG = DesktopDashboardFragment.class.getName();
+    private static final String TAG = "DesktopDashboard";
 
     private static final String KEY_DESKTOP_STATUS = "desktop_status";
 
@@ -191,6 +191,7 @@ public class DesktopDashboardFragment extends ObservablePreferenceFragment
 
     @Override
     public void onSwitchChanged(Switch switchView, boolean isChecked) {
+        Log.d(TAG, "onSwitchChanged isChecked=" + isChecked + ", desktop state=" + mDesktopState);
         if (isChecked) {
             if (mDesktopState == Perspective.STATE_STOPPED) {
                 // prematurely update our state so the user has immediate feedback
@@ -236,6 +237,8 @@ public class DesktopDashboardFragment extends ObservablePreferenceFragment
     }
 
     private void updateView(final int prevDesktopState) {
+        Log.d(TAG, "updateView previous desktop state=" + prevDesktopState
+                + ", new desktop state=" + mDesktopState);
         // common defaults to simplify state configuration
         int hintVisibility = View.INVISIBLE;
 
