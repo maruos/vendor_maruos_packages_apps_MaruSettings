@@ -29,4 +29,12 @@
     <string name="desktop_shutdown_dialog_details">Your desktop apps will be closed immediately so make sure you save any unfinished work.</string>
     <string name="desktop_shutdown_dialog_negative_action">Cancel</string>
     <string name="desktop_shutdown_dialog_positive_action">Shutdown</string>
+
+    <!-- QuickSettings: MMirror [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_mirroring_mode_label">Mirror screen</string>
+    <!-- Announcement made when mirroring changes to disabled (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_qs_mirroring_changed_off">Screen mirroring turned off.</string>
+    <!-- Announcement made when mirroring changes to enabled (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_qs_mirroring_changed_on">Screen mirroring turned on.</string>
+
 </resources>

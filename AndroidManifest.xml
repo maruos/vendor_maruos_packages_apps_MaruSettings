@@ -41,5 +41,14 @@
                 android:name="com.android.settings.summary"
                 android:value="@string/desktop_dashboard_summary" />
         </activity>
+        <service
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:icon="@drawable/ic_mirroring_disabled"
+            android:label="@string/quick_settings_mirroring_mode_label"
+            android:name="com.maru.settings.desktop.MirrorTileService">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
     </application>
 </manifest>
