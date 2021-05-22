@@ -40,6 +40,7 @@ public class MirrorTileService extends TileService {
         mListening = true;
         mDisplayListener.sync();
         mDisplayManager.registerDisplayListener(mDisplayListener, null);
+        refreshState();
     }
 
     @Override
