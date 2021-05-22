@@ -3,70 +3,78 @@ package com.maru.settings.desktop;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Icon;
-import android.mperspective.Perspective;
-import android.mperspective.PerspectiveManager;
+import android.hardware.display.DisplayManager;
 import android.os.Build;
 import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
-import android.util.Log;
+import android.view.Display;
 import androidx.annotation.RequiresApi;
 
 import com.maru.settings.R;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class MirrorTileService extends TileService {
     private static final String TAG = "MirrorTileService";
 
-    private PerspectiveManager mPerspectiveManager;
-    private boolean mIsListening;
+    private DisplayManager mDisplayManager;
+
+    private MDisplayListener mDisplayListener;
+    private Set<Integer> mPresentationDisplays;
+    private boolean mListening = false;
 
     @Override
-    public void onTileAdded() {
-        super.onTileAdded();
-        if (mPerspectiveManager == null) {
-            mPerspectiveManager = (PerspectiveManager) getSystemService(Context.PERSPECTIVE_SERVICE);
-        }
-        mPerspectiveManager.registerPerspectiveListener(new DesktopPerspectiveListener(), null);
+    public void onCreate() {
+        super.onCreate();
+        mDisplayManager = (DisplayManager) getSystemService(Context.DISPLAY_SERVICE);
+        mDisplayListener = new MDisplayListener();
+        mPresentationDisplays = new HashSet<>();
     }
 
     @Override
     public void onStartListening() {
         super.onStartListening();
-        mIsListening = true;
-        if (mPerspectiveManager != null) {
-            updateDesktopStateInternal(mPerspectiveManager.isDesktopRunning());
-        }
+        // Register listener when start listening, and it will be called after Tile added.
+        mListening = true;
+        mDisplayListener.sync();
+        mDisplayManager.registerDisplayListener(mDisplayListener, null);
     }
 
     @Override
     public void onStopListening() {
-        mIsListening = false;
+        // Unregister listener when stop listening.
+        mListening = false;
+        mDisplayManager.unregisterDisplayListener(mDisplayListener);
         super.onStopListening();
     }
 
     @Override
-    public void onTileRemoved() {
-        super.onTileRemoved();
-        if (mPerspectiveManager != null) {
-            mPerspectiveManager.unregisterPerspectiveListener();
+    public void onDestroy() {
+        super.onDestroy();
+        mDisplayManager = null;
+        mDisplayListener = null;
+        if (mPresentationDisplays != null) {
+            mPresentationDisplays.clear();
         }
+        mPresentationDisplays = null;
     }
 
     @Override
     public void onClick() {
         super.onClick();
-        if (mPerspectiveManager != null) {
-            boolean isDesktopRunning = mPerspectiveManager.isDesktopRunning();
-            Log.d(TAG, "onClick current desktop running state " + isDesktopRunning);
-            if (isDesktopRunning) {
-                mPerspectiveManager.stopDesktopPerspective();
+        if (mListening) {
+            if (mDisplayManager.isPhoneMirroringEnabled()) {
+                mDisplayManager.disablePhoneMirroring();
             } else {
-                mPerspectiveManager.startDesktopPerspective();
+                mDisplayManager.enablePhoneMirroring();
             }
+            refreshState();
         }
     }
 
-    private void updateDesktopStateInternal(boolean isMirroring) {
+    private void updateMirrorStateInternal(boolean isMirroring) {
         Tile tile = getQsTile();
         if (tile == null) {
             return;
@@ -81,19 +89,63 @@ public class MirrorTileService extends TileService {
         tile.updateTile();
     }
 
-    private void updateDesktopStateIfNeeded(int state) {
-        Log.d(TAG, "updateDesktopStateIfNeeded: " + Perspective.stateToString(state)
-                + ", listening " + mIsListening);
-        if (mIsListening) {
-            getMainThreadHandler().post(() -> updateDesktopStateInternal(state == Perspective.STATE_RUNNING));
+    private void refreshState() {
+        if (mListening) {
+            boolean isMirroring = mDisplayManager.isPhoneMirroringEnabled();
+            getMainThreadHandler().post(() -> updateMirrorStateInternal(isMirroring));
         }
     }
 
-    private final class DesktopPerspectiveListener implements PerspectiveManager.PerspectiveListener {
+    private class MDisplayListener implements DisplayManager.DisplayListener {
+        /**
+         * Keep track of public presentation displays. These are displays that will show either
+         * Maru Desktop or the mirrored phone screen.
+         */
         @Override
-        public void onPerspectiveStateChanged(int state) {
-            Log.d(TAG, "onPerspectiveStateChanged: " + Perspective.stateToString(state));
-            updateDesktopStateIfNeeded(state);
+        public void onDisplayAdded(int displayId) {
+            if (mDisplayManager != null && mPresentationDisplays != null) {
+                Display display = mDisplayManager.getDisplay(displayId);
+
+                if (display.isPublicPresentation()) {
+                    if (mPresentationDisplays.isEmpty()) {
+                        // the first presentation display was added
+                        refreshState();
+                    }
+                    mPresentationDisplays.add(displayId);
+                }
+            }
+        }
+
+        @Override
+        public void onDisplayRemoved(int displayId) {
+            if (mPresentationDisplays != null
+                    && mPresentationDisplays.remove(displayId)
+                    && mPresentationDisplays.isEmpty()) {
+                // the last presentation display was removed
+                refreshState();
+            }
+        }
+
+        @Override
+        public void onDisplayChanged(int displayId) { /* no-op */ }
+
+        /**
+         * We may miss a display event since listeners are unregistered
+         * when the QS panel is hidden.
+         * <p>
+         * Call this before registering to make sure the initial
+         * state is up-to-date.
+         */
+        public void sync() {
+            if (mPresentationDisplays != null && mDisplayManager != null) {
+                mPresentationDisplays.clear();
+                Display[] displays = mDisplayManager.getDisplays(DisplayManager.DISPLAY_CATEGORY_PRESENTATION);
+                for (Display display : displays) {
+                    if (display.isPublicPresentation()) {
+                        mPresentationDisplays.add(display.getDisplayId());
+                    }
+                }
+            }
         }
     }
 }
