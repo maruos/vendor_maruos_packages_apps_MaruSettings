@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<string name="switch_on_text">開</string>
+    <string name="switch_off_text">關</string>
+    <string name="maru_version">Maru 版本</string>
+    <string name="desktop_dashboard_title">桌面</string>
+    <string name="desktop_dashboard_summary">管理您的桌面</string>
+    <string name="desktop_main_settings_title">Dashboard</string>
+    <string name="desktop_status_starting">Maru 桌面正在啟動...</string>
+    <string name="desktop_status_stopping">Maru 桌面正在關閉...</string>
+    <string name="desktop_status_running">Maru 桌面正在運行。</string>
+    <string name="desktop_status_running_bg">在後台運行的 Maru 桌面。</string>
+    <string name="desktop_status_stopped">Maru 桌面關閉。</string>
+    <string name="desktop_status_start_failure">Maru 桌面無法啟動。</string>
+    <string name="desktop_status_stop_failure">Maru 桌面無法停止。</string>
+    <string name="desktop_status_crash">Maru 桌面意外停止。</string>
+    <string name="desktop_status_hint_interact">連接到外部顯示器以與您的桌面進行交互。</string>
+    <string name="desktop_status_hint_autostart">連接到 HDMI 顯示器以自動啟動您的桌面。</string>
+    <string name="desktop_shutdown_dialog_title">關閉桌面？</string>
+    <string name="desktop_shutdown_dialog_details">您的桌面應用程序將立即關閉，因此請確保保存所有未完成的工作。</string>
+    <string name="desktop_shutdown_dialog_negative_action">取消</string>
+    <string name="desktop_shutdown_dialog_positive_action">關掉</string>
+    <string name="quick_settings_mirroring_mode_label">鏡像屏幕內容</string>
+    <string name="accessibility_qs_mirroring_changed_off">屏幕鏡像關閉。</string>
+    <string name="accessibility_qs_mirroring_changed_on">屏幕鏡像開啟。</string>
+</resources>
