@@ -24,6 +24,7 @@ import android.os.Build;
 import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
 import android.view.Display;
+
 import androidx.annotation.RequiresApi;
 
 import com.maru.settings.R;
@@ -97,10 +98,13 @@ public class MirrorTileService extends TileService {
             return;
         }
         Resources resources = getResources();
-        int iconId = isMirroring ? R.drawable.ic_mirroring_enabled : R.drawable.ic_mirroring_disabled;
+        int iconId =
+                isMirroring ? R.drawable.ic_mirroring_enabled : R.drawable.ic_mirroring_disabled;
         tile.setIcon(Icon.createWithResource(resources, iconId));
-        int descriptionId = isMirroring ? R.string.accessibility_qs_mirroring_changed_on
-                : R.string.accessibility_qs_mirroring_changed_off;
+        int descriptionId =
+                isMirroring
+                        ? R.string.accessibility_qs_mirroring_changed_on
+                        : R.string.accessibility_qs_mirroring_changed_off;
         tile.setContentDescription(resources.getString(descriptionId));
         tile.setState(isMirroring ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE);
         tile.updateTile();
@@ -115,8 +119,8 @@ public class MirrorTileService extends TileService {
 
     private class MDisplayListener implements DisplayManager.DisplayListener {
         /**
-         * Keep track of public presentation displays. These are displays that will show either
-         * Maru Desktop or the mirrored phone screen.
+         * Keep track of public presentation displays. These are displays that will show either Maru
+         * Desktop or the mirrored phone screen.
          */
         @Override
         public void onDisplayAdded(int displayId) {
@@ -144,19 +148,20 @@ public class MirrorTileService extends TileService {
         }
 
         @Override
-        public void onDisplayChanged(int displayId) { /* no-op */ }
+        public void onDisplayChanged(int displayId) {
+            /* no-op */
+        }
 
         /**
-         * We may miss a display event since listeners are unregistered
-         * when the QS panel is hidden.
-         * <p>
-         * Call this before registering to make sure the initial
-         * state is up-to-date.
+         * We may miss a display event since listeners are unregistered when the QS panel is hidden.
+         *
+         * <p>Call this before registering to make sure the initial state is up-to-date.
          */
         public void sync() {
             if (mPresentationDisplays != null && mDisplayManager != null) {
                 mPresentationDisplays.clear();
-                Display[] displays = mDisplayManager.getDisplays(DisplayManager.DISPLAY_CATEGORY_PRESENTATION);
+                Display[] displays =
+                        mDisplayManager.getDisplays(DisplayManager.DISPLAY_CATEGORY_PRESENTATION);
                 for (Display display : displays) {
                     if (display.isPublicPresentation()) {
                         mPresentationDisplays.add(display.getDisplayId());

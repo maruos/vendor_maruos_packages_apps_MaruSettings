@@ -9,14 +9,14 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.android.settingslib.drawer.SettingsDrawerActivity;
+
 import com.maru.settings.widget.SwitchBar;
 
 public class SettingsActivity extends SettingsDrawerActivity {
     private static final String TAG = "SettingsActivity";
     private static final String META_DATA_KEY_FRAGMENT_CLASS =
             "com.android.settings.FRAGMENT_CLASS";
-    private static final String META_DATA_KEY_TITLE =
-            "com.android.settings.title";
+    private static final String META_DATA_KEY_TITLE = "com.android.settings.title";
 
     private String mFragmentClass;
     private String mTitle;
@@ -40,10 +40,7 @@ public class SettingsActivity extends SettingsDrawerActivity {
         try {
             ActivityInfo ai =
                     getPackageManager()
-                            .getActivityInfo(
-                                    getComponentName(),
-                                    PackageManager.GET_META_DATA
-                            );
+                            .getActivityInfo(getComponentName(), PackageManager.GET_META_DATA);
             if (ai == null || ai.metaData == null) {
                 return;
             }

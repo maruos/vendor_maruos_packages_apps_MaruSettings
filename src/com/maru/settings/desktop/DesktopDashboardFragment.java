@@ -29,6 +29,7 @@ import android.view.View;
 import android.widget.Switch;
 
 import com.android.settingslib.core.lifecycle.ObservablePreferenceFragment;
+
 import com.maru.settings.R;
 import com.maru.settings.SettingsActivity;
 import com.maru.settings.widget.SwitchBar;
@@ -36,8 +37,8 @@ import com.maru.settings.widget.ToggleSwitch;
 
 public class DesktopDashboardFragment extends ObservablePreferenceFragment
         implements SwitchBar.OnSwitchChangeListener,
-        ToggleSwitch.OnBeforeCheckedChangeListener,
-        ShutdownDialogFragment.ShutdownDialogListener {
+                ToggleSwitch.OnBeforeCheckedChangeListener,
+                ShutdownDialogFragment.ShutdownDialogListener {
 
     private static final String TAG = "DesktopDashboard";
 
@@ -69,29 +70,29 @@ public class DesktopDashboardFragment extends ObservablePreferenceFragment
 
         final SettingsActivity settingsActivity = (SettingsActivity) getActivity();
         final Context context = settingsActivity.getApplicationContext();
-        mPerspectiveManager = (PerspectiveManager) context
-                .getSystemService(Context.PERSPECTIVE_SERVICE);
-        mDisplayManager = (DisplayManager) context
-                .getSystemService(Context.DISPLAY_SERVICE);
+        mPerspectiveManager =
+                (PerspectiveManager) context.getSystemService(Context.PERSPECTIVE_SERVICE);
+        mDisplayManager = (DisplayManager) context.getSystemService(Context.DISPLAY_SERVICE);
 
         mDesktopListener = new DesktopPerspectiveListener();
 
         mMaruDisplayListener = new MaruDisplayListener(context, mDisplayManager);
-        mMaruDisplayListener.setDisplayCallback(new MaruDisplayListener.MaruDisplayCallback() {
-            @Override
-            public void onDisplayAdded() {
-                Log.d(TAG, "onDisplayAdded");
-                mMaruDisplayConnected = mMaruDisplayListener.isMaruDisplayConnected();
-                updateView();
-            }
+        mMaruDisplayListener.setDisplayCallback(
+                new MaruDisplayListener.MaruDisplayCallback() {
+                    @Override
+                    public void onDisplayAdded() {
+                        Log.d(TAG, "onDisplayAdded");
+                        mMaruDisplayConnected = mMaruDisplayListener.isMaruDisplayConnected();
+                        updateView();
+                    }
 
-            @Override
-            public void onDisplayRemoved() {
-                Log.d(TAG, "onDisplayRemoved");
-                mMaruDisplayConnected = mMaruDisplayListener.isMaruDisplayConnected();
-                updateView();
-            }
-        });
+                    @Override
+                    public void onDisplayRemoved() {
+                        Log.d(TAG, "onDisplayRemoved");
+                        mMaruDisplayConnected = mMaruDisplayListener.isMaruDisplayConnected();
+                        updateView();
+                    }
+                });
 
         mSwitchBar = settingsActivity.getSwitchBar();
         mSwitchBar.show();
@@ -156,8 +157,10 @@ public class DesktopDashboardFragment extends ObservablePreferenceFragment
     @Override
     public boolean onBeforeCheckedChanged(ToggleSwitch toggleSwitch, boolean checked) {
         if (!mOverrideShutdownDialog) {
-            boolean attemptedShutdown = toggleSwitch.isChecked() && !checked
-                    && mDesktopState == Perspective.STATE_RUNNING;
+            boolean attemptedShutdown =
+                    toggleSwitch.isChecked()
+                            && !checked
+                            && mDesktopState == Perspective.STATE_RUNNING;
             if (attemptedShutdown) {
                 if (!mShutdownConfirmed) {
                     ShutdownDialogFragment mShutdownDialogFragment = new ShutdownDialogFragment();
@@ -180,7 +183,9 @@ public class DesktopDashboardFragment extends ObservablePreferenceFragment
     }
 
     @Override
-    public void onShutdownCancel(DialogFragment dialog) { /* no-op */ }
+    public void onShutdownCancel(DialogFragment dialog) {
+        /* no-op */
+    }
 
     @Override
     public void onShutdown(DialogFragment dialog) {
@@ -215,8 +220,10 @@ public class DesktopDashboardFragment extends ObservablePreferenceFragment
          * since it's possible that we missed some events while in the background.
          */
 
-        mDesktopState = mPerspectiveManager.isDesktopRunning() ?
-                Perspective.STATE_RUNNING : Perspective.STATE_STOPPED;
+        mDesktopState =
+                mPerspectiveManager.isDesktopRunning()
+                        ? Perspective.STATE_RUNNING
+                        : Perspective.STATE_STOPPED;
 
         mMaruDisplayListener.sync();
         mMaruDisplayConnected = mMaruDisplayListener.isMaruDisplayConnected();
@@ -237,8 +244,12 @@ public class DesktopDashboardFragment extends ObservablePreferenceFragment
     }
 
     private void updateView(final int prevDesktopState) {
-        Log.d(TAG, "updateView previous desktop state=" + prevDesktopState
-                + ", new desktop state=" + mDesktopState);
+        Log.d(
+                TAG,
+                "updateView previous desktop state="
+                        + prevDesktopState
+                        + ", new desktop state="
+                        + mDesktopState);
         // common defaults to simplify state configuration
         int hintVisibility = View.INVISIBLE;
 
@@ -256,7 +267,8 @@ public class DesktopDashboardFragment extends ObservablePreferenceFragment
             case Perspective.STATE_STOPPED:
                 mSwitchBar.setChecked(false);
                 mSwitchBar.setEnabled(true);
-                if (prevDesktopState == Perspective.STATE_STOPPING || prevDesktopState == mDesktopState) {
+                if (prevDesktopState == Perspective.STATE_STOPPING
+                        || prevDesktopState == mDesktopState) {
                     mDesktopStatusSummary.setTitle(R.string.desktop_status_stopped);
                     if (!mMaruDisplayConnected) {
                         mDesktopStatusSummary.setSummary(R.string.desktop_status_hint_autostart);
@@ -271,7 +283,8 @@ public class DesktopDashboardFragment extends ObservablePreferenceFragment
             case Perspective.STATE_RUNNING:
                 mSwitchBar.setChecked(true);
                 mSwitchBar.setEnabled(true);
-                if (prevDesktopState == Perspective.STATE_STARTING || prevDesktopState == mDesktopState) {
+                if (prevDesktopState == Perspective.STATE_STARTING
+                        || prevDesktopState == mDesktopState) {
                     if (mMaruDisplayConnected) {
                         mDesktopStatusSummary.setTitle(R.string.desktop_status_running);
                     } else {

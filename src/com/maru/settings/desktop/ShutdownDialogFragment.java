@@ -25,8 +25,8 @@ import android.os.Bundle;
 import com.maru.settings.R;
 
 /**
- * A shutdown confirmation dialog to explicitly ensure that the
- * user wants to shutdown the desktop perspective.
+ * A shutdown confirmation dialog to explicitly ensure that the user wants to shutdown the desktop
+ * perspective.
  */
 public class ShutdownDialogFragment extends DialogFragment {
     private static final String TAG = ShutdownDialogFragment.class.getName();
@@ -46,13 +46,11 @@ public class ShutdownDialogFragment extends DialogFragment {
                 .setMessage(R.string.desktop_shutdown_dialog_details)
                 .setNegativeButton(
                         R.string.desktop_shutdown_dialog_negative_action,
-                        (dialogInterface, i)
-                                -> listener.onShutdownCancel(ShutdownDialogFragment.this)
-                )
+                        (dialogInterface, i) ->
+                                listener.onShutdownCancel(ShutdownDialogFragment.this))
                 .setPositiveButton(
                         R.string.desktop_shutdown_dialog_positive_action,
-                        (dialogInterface, i) -> listener.onShutdown(ShutdownDialogFragment.this)
-                );
+                        (dialogInterface, i) -> listener.onShutdown(ShutdownDialogFragment.this));
         return builder.create();
     }
 }
