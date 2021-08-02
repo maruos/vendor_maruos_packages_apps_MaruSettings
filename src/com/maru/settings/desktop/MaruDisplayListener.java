@@ -26,9 +26,9 @@ import java.util.Set;
 
 /**
  * Utility class for keeping track of displays relevant to Maru.
- * <p>
- * Right now, this keeps track of all displays that are eligible for mirroring,
- * i.e. all public presentation displays.
+ *
+ * <p>Right now, this keeps track of all displays that are eligible for mirroring, i.e. all public
+ * presentation displays.
  */
 public class MaruDisplayListener implements DisplayManager.DisplayListener {
     private final Context mContext;
@@ -70,12 +70,14 @@ public class MaruDisplayListener implements DisplayManager.DisplayListener {
     }
 
     @Override
-    public void onDisplayChanged(int displayId) { /* no-op */ }
+    public void onDisplayChanged(int displayId) {
+        /* no-op */
+    }
 
     public void sync() {
         mMirrorableDisplays.clear();
-        Display[] displays = mDisplayManager
-                .getDisplays(DisplayManager.DISPLAY_CATEGORY_PRESENTATION);
+        Display[] displays =
+                mDisplayManager.getDisplays(DisplayManager.DISPLAY_CATEGORY_PRESENTATION);
         for (Display display : displays) {
             if (display.isPublicPresentation()) {
                 mMirrorableDisplays.add(display.getDisplayId());

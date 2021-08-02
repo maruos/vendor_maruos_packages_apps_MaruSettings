@@ -22,15 +22,15 @@ import com.maru.settings.R;
 
 import java.util.ArrayList;
 
-public class SwitchBar extends LinearLayout implements CompoundButton.OnCheckedChangeListener,
-        View.OnClickListener {
+public class SwitchBar extends LinearLayout
+        implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
     public interface OnSwitchChangeListener {
         /**
          * Called when the checked state of the Switch has changed.
          *
          * @param switchView The Switch view whose state has changed.
-         * @param isChecked  The new checked state of switchView.
+         * @param isChecked The new checked state of switchView.
          */
         void onSwitchChanged(Switch switchView, boolean isChecked);
     }
@@ -45,9 +45,7 @@ public class SwitchBar extends LinearLayout implements CompoundButton.OnCheckedC
     private final ArrayList<OnSwitchChangeListener> mSwitchChangeListeners = new ArrayList<>();
 
     private static final int[] XML_ATTRIBUTES = {
-            R.attr.switchBarMarginStart,
-            R.attr.switchBarMarginEnd,
-            R.attr.switchBarBackgroundColor
+        R.attr.switchBarMarginStart, R.attr.switchBarMarginEnd, R.attr.switchBarBackgroundColor
     };
 
     public SwitchBar(Context context) {
@@ -101,10 +99,7 @@ public class SwitchBar extends LinearLayout implements CompoundButton.OnCheckedC
     public void setTextViewLabel(boolean isChecked) {
         mLabel =
                 getResources()
-                        .getString(
-                                isChecked ? R.string.switch_on_text
-                                        : R.string.switch_off_text
-                        );
+                        .getString(isChecked ? R.string.switch_on_text : R.string.switch_off_text);
         updateText();
     }
 
@@ -206,9 +201,7 @@ public class SwitchBar extends LinearLayout implements CompoundButton.OnCheckedC
             super(superState);
         }
 
-        /**
-         * Constructor called from {@link #CREATOR}
-         */
+        /** Constructor called from {@link #CREATOR} */
         private SavedState(Parcel in) {
             super(in);
             checked = (Boolean) in.readValue(null);
@@ -226,20 +219,23 @@ public class SwitchBar extends LinearLayout implements CompoundButton.OnCheckedC
         public String toString() {
             return "SwitchBar.SavedState{"
                     + Integer.toHexString(System.identityHashCode(this))
-                    + " checked=" + checked
-                    + " visible=" + visible + "}";
+                    + " checked="
+                    + checked
+                    + " visible="
+                    + visible
+                    + "}";
         }
 
-        public static final Parcelable.Creator<SavedState> CREATOR
-                = new Parcelable.Creator<SavedState>() {
-            public SavedState createFromParcel(Parcel in) {
-                return new SavedState(in);
-            }
+        public static final Parcelable.Creator<SavedState> CREATOR =
+                new Parcelable.Creator<SavedState>() {
+                    public SavedState createFromParcel(Parcel in) {
+                        return new SavedState(in);
+                    }
 
-            public SavedState[] newArray(int size) {
-                return new SavedState[size];
-            }
-        };
+                    public SavedState[] newArray(int size) {
+                        return new SavedState[size];
+                    }
+                };
     }
 
     @Override
@@ -279,9 +275,7 @@ public class SwitchBar extends LinearLayout implements CompoundButton.OnCheckedC
         return true;
     }
 
-    /**
-     * @hide
-     */
+    /** @hide */
     @Override
     public void onInitializeAccessibilityNodeInfoInternal(AccessibilityNodeInfo info) {
         super.onInitializeAccessibilityNodeInfoInternal(info);
@@ -290,9 +284,7 @@ public class SwitchBar extends LinearLayout implements CompoundButton.OnCheckedC
         info.setChecked(mSwitch.isChecked());
     }
 
-    /**
-     * @hide
-     */
+    /** @hide */
     @Override
     public void onInitializeAccessibilityEventInternal(AccessibilityEvent event) {
         super.onInitializeAccessibilityEventInternal(event);
